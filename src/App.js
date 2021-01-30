@@ -5,6 +5,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import UrlContextProvider from './Contexts/UrlContext';
 
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
       <Router>
         <Switch>
           <Route path="/:url" component={Gourl} />
-          <Route path="/" component={Urlinput} />
+          <UrlContextProvider>
+            <Route path="/" component={Urlinput} />
+          </UrlContextProvider>
         </Switch>
       </Router>
     </div>

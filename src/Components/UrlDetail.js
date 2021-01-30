@@ -1,9 +1,9 @@
 import React from 'react'
 
-function UrlDetail() {
+function UrlDetail({urlData}) {
     return (
         <div>
-            Url Detail Comp
+            {urlData}
         </div>
     )
 }
