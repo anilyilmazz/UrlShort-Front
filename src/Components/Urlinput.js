@@ -1,16 +1,14 @@
-import React, { useContext , useState} from 'react'
-import { UrlContext } from '../Contexts/UrlContext';
+import React, { useState } from 'react'
+// import { UrlContext } from '../Contexts/UrlContext';
 import UrlDetail from './UrlDetail'
-var validUrl = require('valid-url');
 
 function Urlinput() {
 
     const [longurl,setLongUrl] = useState('');
-    const {state, setUrl} = useContext(UrlContext)
+    const [urlData, seturlData] = useState('')
+    // const {state, setUrl} = useContext(UrlContext)
 
     const handleCreateUrl = () =>{
-
-
         if(longurl){
             let urlObject = {
                 url: longurl
@@ -26,10 +24,12 @@ function Urlinput() {
                 body: JSON.stringify(urlObject)
             };
 
-            fetch(`http://url.needs.cf`,requestOptions)
+            fetch(`http://urlapi.needs.cf`,requestOptions)
             .then(response => response.json())
             .then((data) => {
-                console.log(data)
+                if(data.id){
+                    seturlData(data);
+                }
             });  
         }else{
             alert('please enter url')
@@ -43,7 +43,7 @@ function Urlinput() {
                 <input type="text" className="form-control" placeholder="Enter a long URL to make short url" aria-describedby="url-btn" onChange = {(e) => setLongUrl(e.target.value)} value = {longurl}/>
                 <button className="btn btn-outline-secondary" type="button" id="url-btn" onClick = {() => handleCreateUrl()}>Button</button>
             </div>
-            <UrlDetail urlData = 'Lorem Ipsum'/>
+            {urlData ? <UrlDetail urlData = {urlData} /> :<div></div>}    
         </div>
     )
 }
